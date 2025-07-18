@@ -1,0 +1,161 @@
+unit uProjeto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, system.IniFiles;
+
+type
+   TForm1 = class(TForm)
+    Panel1: TPanel;
+    GroupBox1: TGroupBox;
+    ComboSistemaBase: TComboBox;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    gbOpcoes: TGroupBox;
+    cbColaboradores: TCheckBox;
+    cbClasse: TCheckBox;
+    cbContasReceber: TCheckBox;
+    cbContasPagar: TCheckBox;
+    cbGrupos: TCheckBox;
+    cbCodigoAux: TCheckBox;
+    cbPrecos: TCheckBox;
+    cbSaldos: TCheckBox;
+    cbAjMedicamentos: TCheckBox;
+    cbAjNCM: TCheckBox;
+    cbAjTXT: TCheckBox;
+    cbAjTributacao: TCheckBox;
+    cbAjustarOutraBase: TCheckBox;
+    lblBanco: TLabeledEdit;
+    cbBaseTributacao: TCheckBox;
+    cbBaseIndustrias: TCheckBox;
+    cbBaseInfoMed: TCheckBox;
+    cbBaseUnidades: TCheckBox;
+    cbBaseGrupos: TCheckBox;
+    BtnConverter: TButton;
+    cbIndustrias: TCheckBox;
+    cbMedicos: TCheckBox;
+    cbPessoas: TCheckBox;
+    cbProdutos: TCheckBox;
+    cbUnidades: TCheckBox;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    procedure CarregarConfiguracoes;
+    procedure SalvarConfiguracoes;
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+
+
+procedure TForm1.CarregarConfiguracoes;
+var
+  Ini: TIniFile;
+begin
+  Ini := TIniFile.Create('C:\arquivo ini\configuracoes_apogeu.ini');
+  try
+    // Sistema base
+    ComboSistemaBase.Text := Ini.ReadString('SisBase', 'SistemaBase', '');
+
+    // Opções
+    cbColaboradores.Checked := Ini.ReadBool('Opcoes', 'Colaboradores', False);
+    cbClasse.Checked := Ini.ReadBool('Opcoes', 'Classe', False);
+    cbContasReceber.Checked := Ini.ReadBool('Opcoes', 'ContasReceber', False);
+    cbContasPagar.Checked := Ini.ReadBool('Opcoes', 'ContasPagar', False);
+    cbGrupos.Checked := Ini.ReadBool('Opcoes', 'Grupos', False);
+    cbIndustrias.Checked := Ini.ReadBool('Opcoes', 'Industrias', False);
+    cbPessoas.Checked := Ini.ReadBool('Opcoes', 'Pessoas', False);
+    cbMedicos.Checked := Ini.ReadBool('Opcoes', 'Medicos', False);
+    cbUnidades.Checked := Ini.ReadBool('Opcoes', 'Unidades', False);
+    cbProdutos.Checked := Ini.ReadBool('Opcoes', 'Produtos', False);
+    cbCodigoAux.Checked := Ini.ReadBool('Opcoes', 'CodigoAuxiliar', False);
+    cbPrecos.Checked := Ini.ReadBool('Opcoes', 'Precos', False);
+    cbSaldos.Checked := Ini.ReadBool('Opcoes', 'Saldos', False);
+    cbAjustarOutraBase.Checked := Ini.ReadBool('Opcoes', 'AjustarDeOutraBase', False);
+
+    // Ajustes
+    cbAjMedicamentos.Checked := Ini.ReadBool('Ajustes', 'AjustarMedicamentos', False);
+    cbAjNCM.Checked := Ini.ReadBool('Ajustes', 'AjustarNCM', False);
+    cbAjTXT.Checked := Ini.ReadBool('Ajustes', 'AjustarTXT', False);
+    cbAjTributacao.Checked := Ini.ReadBool('Ajustes', 'AjustarTributacao', False);
+
+    // Base Origem (inferior)
+    lblBanco.text := Ini.ReadString('BaseOrigem', 'NomeBanco', '');
+    cbBaseTributacao.Checked := Ini.ReadBool('BaseOrigem', 'Tributacao', False);
+    cbBaseIndustrias.Checked := Ini.ReadBool('BaseOrigem', 'Industrias', False);
+    cbBaseInfoMed.Checked := Ini.ReadBool('BaseOrigem', 'InfoMedicamento', False);
+    cbBaseUnidades.Checked := Ini.ReadBool('BaseOrigem', 'Unidades', False);
+    cbBaseGrupos.Checked := Ini.ReadBool('BaseOrigem', 'Grupos', False);
+
+
+  finally
+    Ini.Free;
+  end;
+end;
+
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SalvarConfiguracoes;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  CarregarConfiguracoes;
+end;
+
+procedure TForm1.SalvarConfiguracoes;
+var
+  Ini: TIniFile;
+begin
+  Ini := TIniFile.Create('C:\arquivo ini\configuracoes_apogeu.ini');
+  try
+    // Sistema base
+    Ini.WriteString('SisBase', 'SistemaBase', ComboSistemaBase.Text);
+
+    // grupo opções
+    Ini.WriteBool('Opcoes', 'Colaboradores', cbColaboradores.Checked);
+    Ini.WriteBool('Opcoes', 'Classe', cbClasse.Checked);
+    Ini.WriteBool('Opcoes', 'ContasReceber', cbContasReceber.Checked);
+    Ini.WriteBool('Opcoes', 'ContasPagar', cbContasPagar.Checked);
+    Ini.WriteBool('Opcoes', 'Grupos', cbGrupos.Checked);
+    Ini.WriteBool('Opcoes', 'Industrias', cbIndustrias.Checked);
+    Ini.WriteBool('Opcoes', 'Pessoas', cbPessoas.Checked);
+    Ini.WriteBool('Opcoes', 'Medicos', cbMedicos.Checked);
+    Ini.WriteBool('Opcoes', 'Unidades', cbUnidades.Checked);
+    Ini.WriteBool('Opcoes', 'Produtos', cbProdutos.Checked);
+    Ini.WriteBool('Opcoes', 'CodigoAuxiliar', cbCodigoAux.Checked);
+    Ini.WriteBool('Opcoes', 'Precos', cbPrecos.Checked);
+    Ini.WriteBool('Opcoes', 'Saldos', cbSaldos.Checked);
+    Ini.WriteBool('Opcoes', 'AjustarDeOutraBase', cbAjustarOutraBase.Checked);
+
+    // grupo ajustes
+    Ini.WriteBool('Ajustes', 'AjustarMedicamentos', cbAjMedicamentos.Checked);
+    Ini.WriteBool('Ajustes', 'AjustarNCM', cbAjNCM.Checked);
+    Ini.WriteBool('Ajustes', 'AjustarTXT', cbAjTXT.Checked);
+    Ini.WriteBool('Ajustes', 'AjustarTributacao', cbAjTributacao.Checked);
+
+    // grupo base origem
+    Ini.WriteString('BaseOrigem', 'NomeBanco', lblBanco.text);
+    Ini.WriteBool('BaseOrigem', 'Tributacao', cbBaseTributacao.Checked);
+    Ini.WriteBool('BaseOrigem', 'Industrias', cbBaseIndustrias.Checked);
+    Ini.WriteBool('BaseOrigem', 'InfoMedicamento', cbBaseInfoMed.Checked);
+    Ini.WriteBool('BaseOrigem', 'Unidades', cbBaseUnidades.Checked);
+    Ini.WriteBool('BaseOrigem', 'Grupos', cbBaseGrupos.Checked);
+
+
+  finally
+    Ini.Free;
+  end;
+end;
+
+
+end.

@@ -1,0 +1,168 @@
+unit uTelaPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs;
+
+type
+  TForm1 = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+procedure TfrmConversorApogeu.FormCreate(Sender: TObject);
+begin
+  Self.Caption := 'Conversor Terceiros para APOGEU';
+  Self.Width := 600;
+  Self.Height := 700;
+  Self.Position := poScreenCenter;
+
+  // ComboBox Sistema Base
+  ComboSistemaBase := TComboBox.Create(Self);
+  ComboSistemaBase.Parent := Self;
+  ComboSistemaBase.Left := 20;
+  ComboSistemaBase.Top := 60;
+  ComboSistemaBase.Width := 300;
+  ComboSistemaBase.Items.Add('31 - SoftShop');
+  ComboSistemaBase.Items.Add('32 - OutroSistema');
+  ComboSistemaBase.ItemIndex := 0;
+
+  // GroupBox: Opções
+  gbOpcoes := TGroupBox.Create(Self);
+  gbOpcoes.Parent := Self;
+  gbOpcoes.Caption := 'Opções';
+  gbOpcoes.SetBounds(20, 100, 250, 250);
+
+  cbColaboradores := TCheckBox.Create(gbOpcoes);
+  cbColaboradores.Parent := gbOpcoes;
+  cbColaboradores.Caption := 'Colaboradores';
+  cbColaboradores.Top := 20;
+
+  cbClasse := TCheckBox.Create(gbOpcoes);
+  cbClasse.Parent := gbOpcoes;
+  cbClasse.Caption := 'Classe';
+  cbClasse.Top := 40;
+
+  cbContasReceber := TCheckBox.Create(gbOpcoes);
+  cbContasReceber.Parent := gbOpcoes;
+  cbContasReceber.Caption := 'Contas a receber';
+  cbContasReceber.Top := 60;
+
+  cbContasPagar := TCheckBox.Create(gbOpcoes);
+  cbContasPagar.Parent := gbOpcoes;
+  cbContasPagar.Caption := 'Contas a pagar';
+  cbContasPagar.Top := 80;
+
+  cbGrupos := TCheckBox.Create(gbOpcoes);
+  cbGrupos.Parent := gbOpcoes;
+  cbGrupos.Caption := 'Grupos';
+  cbGrupos.Top := 100;
+
+  cbIndustrias := TCheckBox.Create(gbOpcoes);
+  cbIndustrias.Parent := gbOpcoes;
+  cbIndustrias.Caption := 'Indústrias';
+  cbIndustrias.Top := 120;
+
+  cbPessoas := TCheckBox.Create(gbOpcoes);
+  cbPessoas.Parent := gbOpcoes;
+  cbPessoas.Caption := 'Pessoas';
+  cbPessoas.Top := 140;
+
+  cbMedicos := TCheckBox.Create(gbOpcoes);
+  cbMedicos.Parent := gbOpcoes;
+  cbMedicos.Caption := 'Médicos';
+  cbMedicos.Top := 160;
+
+  cbUnidades := TCheckBox.Create(gbOpcoes);
+  cbUnidades.Parent := gbOpcoes;
+  cbUnidades.Caption := 'Unidades';
+  cbUnidades.Top := 180;
+
+  cbProdutos := TCheckBox.Create(gbOpcoes);
+  cbProdutos.Parent := gbOpcoes;
+  cbProdutos.Caption := 'Produtos';
+  cbProdutos.Top := 200;
+  cbProdutos.Checked := True;
+
+  cbCodigoAux := TCheckBox.Create(gbOpcoes);
+  cbCodigoAux.Parent := gbOpcoes;
+  cbCodigoAux.Caption := 'Código Auxiliar';
+  cbCodigoAux.Top := 220;
+  cbCodigoAux.Checked := True;
+
+  cbPrecos := TCheckBox.Create(gbOpcoes);
+  cbPrecos.Parent := gbOpcoes;
+  cbPrecos.Caption := 'Preços';
+  cbPrecos.Top := 240;
+  cbPrecos.Checked := True;
+
+  cbSaldos := TCheckBox.Create(gbOpcoes);
+  cbSaldos.Parent := gbOpcoes;
+  cbSaldos.Caption := 'Saldos';
+  cbSaldos.Top := 260;
+  cbSaldos.Checked := True;
+
+  // Checkbox: Ajustar informações a partir de outra base
+  cbAjustarOutraBase := TCheckBox.Create(Self);
+  cbAjustarOutraBase.Parent := Self;
+  cbAjustarOutraBase.Caption := 'Ajustar informações a partir de outra base';
+  cbAjustarOutraBase.Left := 300;
+  cbAjustarOutraBase.Top := 100;
+  cbAjustarOutraBase.Checked := True;
+
+  // GroupBox: Ajustes
+  gbAjustes := TGroupBox.Create(Self);
+  gbAjustes.Parent := Self;
+  gbAjustes.Caption := 'Ajustes';
+  gbAjustes.SetBounds(300, 130, 250, 120);
+
+  cbAjMedicamentos := TCheckBox.Create(gbAjustes);
+  cbAjMedicamentos.Parent := gbAjustes;
+  cbAjMedicamentos.Caption := 'Ajustar medicamentos';
+  cbAjMedicamentos.Top := 20;
+
+  cbAjNCM := TCheckBox.Create(gbAjustes);
+  cbAjNCM.Parent := gbAjustes;
+  cbAjNCM.Caption := 'Ajustar NCM/CST via Nocix';
+  cbAjNCM.Top := 40;
+  cbAjNCM.Checked := True;
+
+  cbAjTXT := TCheckBox.Create(gbAjustes);
+  cbAjTXT.Parent := gbAjustes;
+  cbAjTXT.Caption := 'Ajustar Tributação TXT';
+  cbAjTXT.Top := 60;
+
+  cbAjTributacao := TCheckBox.Create(gbAjustes);
+  cbAjTributacao.Parent := gbAjustes;
+  cbAjTributacao.Caption := 'Ajustar Tributação';
+  cbAjTributacao.Top := 80;
+  cbAjTributacao.Checked := True;
+
+  // Simulação de "Banco de dados" e links (labels)
+  lblBanco := TLabel.Create(Self);
+  lblBanco.Parent := Self;
+  lblBanco.Caption := 'dbERP_ApogeuGenerica';
+  lblBanco.Left := 120;
+  lblBanco.Top := 400;
+  lblBanco.Font.Color := clBlue;
+
+  // Botão Converter
+  btnConverter := TButton.Create(Self);
+  btnConverter.Parent := Self;
+  btnConverter.Caption := 'Converter';
+  btnConverter.SetBounds(450, 630, 100, 30);
+end;
+
+
+end.
+
